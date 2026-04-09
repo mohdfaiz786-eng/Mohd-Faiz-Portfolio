@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Your Name</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .blog-container {
+            max-width: 900px;
+            margin: 120px auto 60px;
+            padding: 0 2rem;
+        }
+        .blog-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .blog-post-card {
+            background: var(--bg-tertiary);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s;
+        }
+        .blog-post-card:hover {
+            transform: translateY(-5px);
+        }
+        .blog-post-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        .blog-post-meta {
+            color: var(--accent-primary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        .blog-post-excerpt {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        .read-more {
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .blog-post-full {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--text-tertiary);
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+        .blog-post-full.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo"><a href="index.html">P<span class="logo-dot">.</span></a></div>
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#projects">Projects</a></li>
+                    <li><a href="blog.html" class="active">Blog</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="blog-container">
+        <div class="blog-header">
+            <h1 class="section-title">My <span class="gradient-text">Blog</span></h1>
+            <div class="section-line"></div>
+            <p style="margin-top: 1rem; color: var(--text-secondary);">Thoughts, tutorials, and insights on AI, ML, and development</p>
+        </div>
+        <div id="blogPosts"></div>
+    </div>
+
+    <script>
+        // Blog posts data (directly in JS - easiest approach)
+        const blogPosts = [
+            {
+                id: 1,
+                title: "🧠 Diabetes Prediction using Machine Learning",
+                date: "March 15, 2024",
+                excerpt: "A technical overview of developing a medical prediction system using machine learning algorithms for real-time diabetes risk assessment...",
+                content: `<h3>Project Overview</h3>
+                    <p>This web application uses a trained machine learning model (Logistic Regression / Random Forest / KNN) to predict whether a person is likely to have diabetes, based on inputs like:</p>
+                    <ul>
+                        <li>Pregnancies</li>
+                        <li>Glucose Level</li>
+                        <li>Blood Pressure</li>
+                        <li>Skin Thickness</li>
+                        <li>Insulin</li>
+                        <li>BMI</li>
+                        <li>Diabetes Pedigree Function</li>
+                        <li>Age</li>
+                    </ul>
+                    <h3>Dataset Used</h3>
+                    <p>Pima Indian Diabetes Dataset, a standard dataset used for binary classification problems in healthcare.</p>
+                    <h3>Model Performance</h3>
+                    <p>Achieved 89% accuracy using ensemble methods and feature engineering techniques.</p>
+                    <h3>Tech Stack</h3>
+                    <p>Python, Scikit-learn, Pandas, Flask, React.js</p>`
+            },
+            {
+                id: 2,
+                title: "🌐 Building an AI Translator That Bridges Global Divides",
+                date: "March 10, 2024",
+                excerpt: "The Silent Revolution in Web Development - Most users don't care about your stack—they care about magic that works...",
+                content: `<h3>Three Non-negotiable Requirements</h3>
+                    <ul>
+                        <li>Instant results (under 1.5s response time)</li>
+                        <li>Accuracy surpassing free tools</li>
+                        <li>Zero learning curve</li>
+                    </ul>
+                    <h3>The Bigger Picture</h3>
+                    <p>This isn't just about converting words—it's about proving that production-grade AI tools can be:</p>
+                    <ul>
+                        <li>✅ Affordable (current cost: $0/month)</li>
+                        <li>✅ Accessible (no ML PhD required)</li>
+                        <li>✅ Adaptable (from tourists to Fortune 500 teams)</li>
+                    </ul>
+                    <h3>Technical Implementation</h3>
+                    <p>Built with Python, Google Translate API, and a clean GUI interface using Tkinter. The backend handles rate limiting, error handling, and supports 100+ languages with real-time translation.</p>`
+            },
+            {
+                id: 3,
+                title: "📘 The Future of AI in Education",
+                date: "March 5, 2024",
+                excerpt: "Exploring how this AI-Powered FAQ Chatbot transforms learning and support systems...",
+                content: `<h3>The Problem</h3>
+                    <p>In an age of information overload, static FAQ pages often fail to serve users efficiently.</p>
+                    <h3>The Solution</h3>
+                    <p>An AI-Powered FAQ Chatbot that can understand natural language questions, deliver instant and accurate responses, and enhance user experience across educational and support platforms.</p>
+                    <h3>Technical Deep Dive</h3>
+                    <ul>
+                        <li>Built with Python, Flask, and NLTK</li>
+                        <li>Uses TF-IDF Vectorization + Cosine Similarity</li>
+                        <li>Delivers fast, relevant, and intelligent responses</li>
+                        <li>Hosted live via Render</li>
+                    </ul>
+                    <h3>Impact</h3>
+                    <p>Reduced support ticket volume by 60% and improved user satisfaction scores by 45%.</p>`
+            }
+        ];
+
+        function renderBlogPosts() {
+            const container = document.getElementById('blogPosts');
+            container.innerHTML = blogPosts.map(post => `
+                <div class="blog-post-card">
+                    <h2 class="blog-post-title">${post.title}</h2>
+                    <div class="blog-post-meta"><i class="far fa-calendar-alt"></i> ${post.date}</div>
+                    <p class="blog-post-excerpt">${post.excerpt}</p>
+                    <button class="btn btn-primary" onclick="togglePost(${post.id})" style="padding: 0.5rem 1rem; font-size: 0.875rem;">
+                        Read More <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <div id="post-${post.id}" class="blog-post-full">${post.content}</div>
+                </div>
+            `).join('');
+        }
+
+        function togglePost(id) {
+            const postDiv = document.getElementById(`post-${id}`);
+            const isVisible = postDiv.classList.contains('show');
+            
+            // Close all other posts
+            document.querySelectorAll('.blog-post-full').forEach(div => {
+                div.classList.remove('show');
+            });
+            
+            // Toggle current post
+            if (!isVisible) {
+                postDiv.classList.add('show');
+                postDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        renderBlogPosts();
+    </script>
+</body>
+</html>
