@@ -52,21 +52,40 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // ========== Mobile Menu ==========
+    // ========== Mobile Menu Toggle ==========
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
+    const menuOverlay = document.querySelector('.menu-overlay');
     
     if (hamburger && navMenu) {
+        const closeMenu = () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            if (menuOverlay) menuOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+        
+        const openMenu = () => {
+            hamburger.classList.add('active');
+            navMenu.classList.add('active');
+            if (menuOverlay) menuOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        };
+        
         hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
+            if (navMenu.classList.contains('active')) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
         });
         
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-            });
+        if (menuOverlay) {
+            menuOverlay.addEventListener('click', closeMenu);
+        }
+        
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', closeMenu);
         });
     }
     
@@ -102,62 +121,60 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // ========== Projects Data (Mohd Faiz ke projects) ==========
+    // ========== Projects Data ==========
     const projects = [
         {
             title: "Heart Disease Prediction System",
             description: "ML system using Random Forest to predict heart disease with 85% accuracy. Deployed with Streamlit web interface.",
-            image: "https://via.placeholder.com/400x200?text=Heart+Disease+Prediction",
+            image: "assets/images/heart-image.png",
             tech: ["Python", "Scikit-learn", "Pandas", "Streamlit"],
             category: "ml",
             github: "https://github.com/mohdfaiz786-eng",
-            live: "#"
+            live: "https://heart-disease-predictor-get4gtsmsdhgrvaud6fcpm.streamlit.app/"
         },
         {
             title: "Sentiment & Sales Insights Analytics",
             description: "AI-powered analytics pipeline using TF-IDF and Transformer models for sentiment analysis from call recordings.",
-            image: "https://via.placeholder.com/400x200?text=Sentiment+Analytics",
+            image: "assets/images/Sentiment-image.png",
             tech: ["Python", "TF-IDF", "Transformers", "Plotly"],
             category: "ai",
             github: "https://github.com/mohdfaiz786-eng",
-            live: "#"
+            live: "https://company-analysis-yvknokse22rsjet66qsjgq.streamlit.app/"
         },
         {
             title: "Data Analytics Dashboard",
             description: "Interactive dashboard for visualizing CRM data with Plotly. Automated preprocessing and feature engineering.",
-            image: "https://via.placeholder.com/400x200?text=Analytics+Dashboard",
+            image: "assets/images/data-image.png",
             tech: ["Python", "Pandas", "Plotly", "Streamlit"],
             category: "web",
             github: "https://github.com/mohdfaiz786-eng",
             live: "#"
         },
         {
-            title: "Customer Segmentation Analysis",
-            description: "Unsupervised learning project for customer segmentation using K-Means clustering and PCA.",
-            image: "https://via.placeholder.com/400x200?text=Customer+Segmentation",
-            tech: ["Python", "K-Means", "PCA", "Seaborn"],
-            category: "ml",
+            title: "FAQ AI Chatbot",
+            description: "NLP-based chatbot using TF-IDF and cosine similarity to answer frequently asked questions.",
+            image: "assets/images/chatbot-image.png",
+            tech: ["Python", "NLTK", "Flask", "TensorFlow"],
+            category: "ai",
             github: "https://github.com/mohdfaiz786-eng",
-            live: "#"
-        },
-        {
-            title: "House Price Prediction",
-            description: "Regression model predicting housing prices with 92% R-squared score using advanced techniques.",
-            image: "https://via.placeholder.com/400x200?text=House+Price",
-            tech: ["Python", "Regression", "Pandas", "Matplotlib"],
-            category: "ml",
-            github: "https://github.com/mohdfaiz786-eng",
-            live: "#"
+            live: "https://codealpha-faq-chatbot.onrender.com/"
         }
     ];
     
     // ========== Render Projects ==========
     const projectsGrid = document.getElementById('projectsGrid');
-    if (projectsGrid) {
-        projectsGrid.innerHTML = projects.map(project => `
+    
+    function renderProjects(filter = 'all') {
+        if (!projectsGrid) return;
+        
+        const filtered = filter === 'all' 
+            ? projects 
+            : projects.filter(p => p.category === filter);
+        
+        projectsGrid.innerHTML = filtered.map(project => `
             <div class="project-card" data-aos="fade-up">
                 <div class="project-image">
-                    <img src="${project.image}" alt="${project.title}">
+                    <img src="${project.image}" alt="${project.title}" onerror="this.src='https://placehold.co/400x200?text=${project.title}'">
                     <div class="project-overlay">
                         <a href="${project.github}" class="project-link" target="_blank"><i class="fab fa-github"></i></a>
                         <a href="${project.live}" class="project-link" target="_blank"><i class="fas fa-external-link-alt"></i></a>
@@ -167,45 +184,72 @@ document.addEventListener('DOMContentLoaded', function() {
                     <h3 class="project-title">${project.title}</h3>
                     <p class="project-description">${project.description}</p>
                     <div class="project-tech">
-                        ${project.tech.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                        ${project.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
                     </div>
                 </div>
             </div>
         `).join('');
     }
     
+    renderProjects();
+    
+    // ========== Project Filters ==========
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderProjects(btn.dataset.filter);
+        });
+    });
+    
     // ========== Certifications Data ==========
     const certifications = [
         {
-            title: "Data Analytics Internship Certificate",
-            issuer: "Python and Pandas",
-            date: "July 2024",
-            icon: "fas fa-chart-line"
+            title: "Responsive Web Design",
+            issuer: "Free Code Camp",
+            date: "December 2024",
+            image: "assets/images/Responsive-Certificate.png",
+            icon: "fas fa-code",
+            description: "Completed Responsive Web Design certification from freeCodeCamp, gaining strong hands-on experience in HTML5, CSS3, Flexbox, and CSS Grid. Built multiple responsive web projects ensuring mobile compatibility, accessibility, and modern UI/UX design principles."
+        },
+        {
+            title: "Data Analytics Internship",
+            issuer: "Code Grills",
+            date: "October 2024",
+            image: "assets/images/certicate codegrills.jpeg",
+            icon: "fas fa-chart-line",
+            description: "Successfully completed a Data Analytics internship at Code Grills, working with real-world datasets using Python, Pandas, and NumPy. Performed data cleaning, preprocessing, exploratory data analysis (EDA), and created insightful visualizations using Matplotlib and Seaborn."
         },
         {
             title: "Summer Training on Python with Data Science",
-            issuer: "Softpro Intern",
-            date: "July 2025",
-            icon: "fab fa-python"
-        },
-        {
-            title: "Statistics Using R And Python",
-            issuer: "Certification",
-            date: "October 2023",
-            icon: "fas fa-chart-bar"
+            issuer: "Softpro India Computer Technologies (P) Ltd.",
+            date: "August 2025",
+            image: "assets/images/Certificte sp.jpg",
+            icon: "fab fa-python",
+            description: "Completed intensive summer training on Python with Data Science at Softpro India, covering core Python programming, data analysis, and machine learning fundamentals. Worked on practical projects involving data preprocessing, model building, and evaluation using libraries like Pandas and Scikit-learn."
         }
     ];
     
+    // ========== Render Certifications ==========
     const certGrid = document.getElementById('certificationsGrid');
     if (certGrid) {
         certGrid.innerHTML = certifications.map(cert => `
-            <div class="cert-card" data-aos="fade-up">
-                <div class="cert-icon">
-                    <i class="${cert.icon}"></i>
+            <div class="cert-card">
+                <div class="cert-image">
+                    <img src="${cert.image}" onerror="this.src='https://placehold.co/400x200?text=${cert.title}'">
                 </div>
-                <h3 class="cert-title">${cert.title}</h3>
-                <p class="cert-issuer">${cert.issuer}</p>
-                <p class="cert-date">${cert.date}</p>
+                <div class="cert-content">
+                    <div class="cert-icon">
+                        <i class="${cert.icon}"></i>
+                    </div>
+                    <h3 class="cert-title">${cert.title}</h3>
+                    <p class="cert-issuer">${cert.issuer}</p>
+                    <p class="cert-date"><i class="far fa-calendar-alt"></i> ${cert.date}</p>
+                    <div class="cert-short-description">${cert.description.substring(0, 120)}...</div>
+                    <div class="cert-full-description" style="display: none;">${cert.description}</div>
+                    <button class="cert-readmore" onclick="toggleReadMore(this)">Read More</button>
+                </div>
             </div>
         `).join('');
     }
@@ -223,34 +267,53 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const totalStars = reposData.reduce((acc, repo) => acc + repo.stargazers_count, 0);
             
-            document.getElementById('repoCount').textContent = userData.public_repos || 0;
-            document.getElementById('starCount').textContent = totalStars || 0;
-            document.getElementById('followerCount').textContent = userData.followers || 0;
+            const repoCountEl = document.getElementById('repoCount');
+            const starCountEl = document.getElementById('starCount');
+            const followerCountEl = document.getElementById('followerCount');
+            const commitCountEl = document.getElementById('commitCount');
             
-            // Fallback commits (GitHub API limits)
-            document.getElementById('commitCount').textContent = '50+';
+            if (repoCountEl) repoCountEl.textContent = userData.public_repos || 0;
+            if (starCountEl) starCountEl.textContent = totalStars || 0;
+            if (followerCountEl) followerCountEl.textContent = userData.followers || 0;
+            if (commitCountEl) commitCountEl.textContent = '50+';
             
-            // Stats images
-            document.getElementById('githubLangChart').src = `https://github-readme-stats.vercel.app/api/top-langs/?username=${username}&theme=radical&hide_border=true`;
-            document.getElementById('githubStatsChart').src = `https://github-readme-stats.vercel.app/api?username=${username}&show_icons=true&theme=radical&hide_border=true`;
+            const langChart = document.getElementById('githubLangChart');
+            const statsChart = document.getElementById('githubStatsChart');
+            
+            if (langChart) langChart.src = `https://github-readme-stats.vercel.app/api/top-langs/?username=${username}&theme=radical&hide_border=true`;
+            if (statsChart) statsChart.src = `https://github-readme-stats.vercel.app/api?username=${username}&show_icons=true&theme=radical&hide_border=true`;
             
         } catch (error) {
-            console.log('GitHub API error, using fallback');
-            document.getElementById('repoCount').textContent = '10+';
-            document.getElementById('commitCount').textContent = '50+';
-            document.getElementById('starCount').textContent = '5+';
-            document.getElementById('followerCount').textContent = '10+';
+            console.log('Using fallback stats');
+            const repoCountEl = document.getElementById('repoCount');
+            const commitCountEl = document.getElementById('commitCount');
+            const starCountEl = document.getElementById('starCount');
+            const followerCountEl = document.getElementById('followerCount');
+            
+            if (repoCountEl) repoCountEl.textContent = '10+';
+            if (commitCountEl) commitCountEl.textContent = '50+';
+            if (starCountEl) starCountEl.textContent = '5+';
+            if (followerCountEl) followerCountEl.textContent = '10+';
         }
     }
     
     fetchGitHubStats();
     
-    // ========== Contact Form ==========
+    // ========== Contact Form (SINGLE - Use this one) ==========
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Thank you for your message! I will get back to you soon.');
+            
+            const name = document.getElementById('name')?.value || '';
+            const email = document.getElementById('email')?.value || '';
+            const subject = document.getElementById('subject')?.value || '';
+            const message = document.getElementById('message')?.value || '';
+            
+            // Show success message
+            alert(`Thank you ${name}! Your message has been sent. I'll get back to you soon.`);
+            
+            // Reset form
             contactForm.reset();
         });
     }
@@ -272,9 +335,46 @@ document.addEventListener('DOMContentLoaded', function() {
     // ========== Dynamic Year ==========
     const yearElement = document.querySelector('.footer-text p');
     if (yearElement) {
-        yearElement.innerHTML = yearElement.innerHTML.replace('2024', new Date().getFullYear());
+        yearElement.innerHTML = yearElement.innerHTML.replace('2025', new Date().getFullYear());
+    }
+    
+    // ========== Skill Bars Animation ==========
+    const skillBars = document.querySelectorAll('.skill-progress');
+    const skillsSection = document.querySelector('.skills');
+    
+    if (skillsSection && skillBars.length) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    skillBars.forEach(bar => {
+                        const width = bar.style.width;
+                        if (width) bar.style.width = width;
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        
+        observer.observe(skillsSection);
     }
     
     // ========== Console Welcome ==========
     console.log('%c🚀 Welcome to Mohd Faiz Portfolio!', 'color: #6366f1; font-size: 16px; font-weight: bold;');
 });
+
+// ========== Toggle Function (Global for Read More) ==========
+function toggleReadMore(btn) {
+    const card = btn.closest('.cert-card');
+    const shortDesc = card.querySelector('.cert-short-description');
+    const fullDesc = card.querySelector('.cert-full-description');
+    
+    if (fullDesc.style.display === 'none') {
+        shortDesc.style.display = 'none';
+        fullDesc.style.display = 'block';
+        btn.textContent = 'Read Less';
+    } else {
+        shortDesc.style.display = 'block';
+        fullDesc.style.display = 'none';
+        btn.textContent = 'Read More';
+    }
+}
