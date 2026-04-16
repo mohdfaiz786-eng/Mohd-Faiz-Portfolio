@@ -1,7 +1,7 @@
-// ========== Wait for DOM to Load ==========
+// ========== Wait for DOM ==========
 document.addEventListener('DOMContentLoaded', function() {
     
-    // ========== Loader ==========
+    // Loader
     const loader = document.querySelector('.loader');
     if (loader) {
         setTimeout(() => {
@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 1500);
     }
     
-    // ========== Typed.js Animation ==========
+    // Typed.js
     if (typeof Typed !== 'undefined') {
         new Typed('.typed-text', {
             strings: ['Data Scientist', 'Python Developer', 'ML Engineer', 'Data Analyst'],
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // ========== Navbar Scroll Effect ==========
+    // Navbar Scroll
     const navbar = document.querySelector('.navbar');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // ========== Active Navigation Link ==========
+    // Active Navigation
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('.nav-link');
     
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // ========== Mobile Menu Toggle ==========
+    // Mobile Menu
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
     const menuOverlay = document.querySelector('.menu-overlay');
@@ -89,16 +89,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // ========== Theme Toggle ==========
+    // Theme Toggle
     const themeToggle = document.querySelector('.theme-toggle');
-    const savedTheme = localStorage.getItem('theme');
-    
-    if (savedTheme === 'light') {
-        document.body.setAttribute('data-theme', 'light');
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-    }
-    
     if (themeToggle) {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.body.setAttribute('data-theme', 'light');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
         themeToggle.addEventListener('click', () => {
             if (document.body.getAttribute('data-theme') === 'light') {
                 document.body.removeAttribute('data-theme');
@@ -112,16 +111,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // ========== AOS Init ==========
+    // AOS
     if (typeof AOS !== 'undefined') {
-        AOS.init({
-            duration: 800,
-            once: true,
-            offset: 50
-        });
+        AOS.init({ duration: 800, once: true, offset: 50 });
     }
     
-    // ========== Projects Data ==========
+    // Projects Data
     const projects = [
         {
             title: "Heart Disease Prediction System",
@@ -130,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
             tech: ["Python", "Scikit-learn", "Pandas", "Streamlit"],
             category: "ml",
             github: "https://github.com/mohdfaiz786-eng",
-            live: "https://heart-disease-predictor-get4gtsmsdhgrvaud6fcpm.streamlit.app/"
+            live: "https://heart-disease-predictor.streamlit.app/"
         },
         {
             title: "Sentiment & Sales Insights Analytics",
@@ -139,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
             tech: ["Python", "TF-IDF", "Transformers", "Plotly"],
             category: "ai",
             github: "https://github.com/mohdfaiz786-eng",
-            live: "https://company-analysis-yvknokse22rsjet66qsjgq.streamlit.app/"
+            live: "https://company-analysis.streamlit.app/"
         },
         {
             title: "Data Analytics Dashboard",
@@ -161,15 +156,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     ];
     
-    // ========== Render Projects ==========
+    // Render Projects
     const projectsGrid = document.getElementById('projectsGrid');
     
     function renderProjects(filter = 'all') {
         if (!projectsGrid) return;
         
-        const filtered = filter === 'all' 
-            ? projects 
-            : projects.filter(p => p.category === filter);
+        const filtered = filter === 'all' ? projects : projects.filter(p => p.category === filter);
         
         projectsGrid.innerHTML = filtered.map(project => `
             <div class="project-card" data-aos="fade-up">
@@ -193,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     renderProjects();
     
-    // ========== Project Filters ==========
+    // Project Filters
     const filterBtns = document.querySelectorAll('.filter-btn');
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -203,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // ========== Certifications Data ==========
+    // Certifications Data
     const certifications = [
         {
             title: "Responsive Web Design",
@@ -223,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         {
             title: "Summer Training on Python with Data Science",
-            issuer: "Softpro India Computer Technologies (P) Ltd.",
+            issuer: "Softpro India",
             date: "August 2025",
             image: "assets/images/Certificte sp.jpg",
             icon: "fab fa-python",
@@ -231,13 +224,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     ];
     
-    // ========== Render Certifications ==========
+    // Render Certifications
     const certGrid = document.getElementById('certificationsGrid');
     if (certGrid) {
         certGrid.innerHTML = certifications.map(cert => `
             <div class="cert-card">
                 <div class="cert-image">
-                    <img src="${cert.image}" onerror="this.src='https://placehold.co/400x200?text=${cert.title}'">
+                    <img src="${cert.image}" onerror="this.src='https://placehold.co/400x250?text=${cert.title}'">
                 </div>
                 <div class="cert-content">
                     <div class="cert-icon">
@@ -254,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `).join('');
     }
     
-    // ========== GitHub Stats ==========
+    // GitHub Stats
     async function fetchGitHubStats() {
         const username = 'mohdfaiz786-eng';
         
@@ -267,71 +260,50 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const totalStars = reposData.reduce((acc, repo) => acc + repo.stargazers_count, 0);
             
-            const repoCountEl = document.getElementById('repoCount');
-            const starCountEl = document.getElementById('starCount');
-            const followerCountEl = document.getElementById('followerCount');
-            const commitCountEl = document.getElementById('commitCount');
-            
-            if (repoCountEl) repoCountEl.textContent = userData.public_repos || 0;
-            if (starCountEl) starCountEl.textContent = totalStars || 0;
-            if (followerCountEl) followerCountEl.textContent = userData.followers || 0;
-            if (commitCountEl) commitCountEl.textContent = '50+';
-            
-            const langChart = document.getElementById('githubLangChart');
-            const statsChart = document.getElementById('githubStatsChart');
-            
-            if (langChart) langChart.src = `https://github-readme-stats.vercel.app/api/top-langs/?username=${username}&theme=radical&hide_border=true`;
-            if (statsChart) statsChart.src = `https://github-readme-stats.vercel.app/api?username=${username}&show_icons=true&theme=radical&hide_border=true`;
+            document.getElementById('repoCount').textContent = userData.public_repos || '8+';
+            document.getElementById('starCount').textContent = totalStars || '5+';
+            document.getElementById('followerCount').textContent = userData.followers || '5+';
+            document.getElementById('commitCount').textContent = '50+';
             
         } catch (error) {
             console.log('Using fallback stats');
-            const repoCountEl = document.getElementById('repoCount');
-            const commitCountEl = document.getElementById('commitCount');
-            const starCountEl = document.getElementById('starCount');
-            const followerCountEl = document.getElementById('followerCount');
-            
-            if (repoCountEl) repoCountEl.textContent = '10+';
-            if (commitCountEl) commitCountEl.textContent = '50+';
-            if (starCountEl) starCountEl.textContent = '5+';
-            if (followerCountEl) followerCountEl.textContent = '10+';
+            document.getElementById('repoCount').textContent = '8+';
+            document.getElementById('commitCount').textContent = '50+';
+            document.getElementById('starCount').textContent = '5+';
+            document.getElementById('followerCount').textContent = '5+';
         }
     }
     
     fetchGitHubStats();
     
-    // ========== Contact Form (SINGLE - Use this one) ==========
-// ========== Contact Form - Formspree Working ==========
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-    contactForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        const formData = new FormData(contactForm);
-        
-        try {
-            const response = await fetch(contactForm.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            });
+    // Contact Form
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
             
-            if (response.ok) {
-                alert('✅ Message sent successfully! I will get back to you soon.');
-                contactForm.reset();
-            } else {
-                const errorData = await response.json();
-                console.log('Formspree error:', errorData);
-                alert('❌ Error: ' + (errorData.error || 'Something went wrong. Please email me directly.'));
+            const formData = new FormData(contactForm);
+            
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+                
+                if (response.ok) {
+                    alert('✅ Message sent successfully! I will get back to you soon.');
+                    contactForm.reset();
+                } else {
+                    alert('❌ Error sending message. Please email me directly.');
+                }
+            } catch (error) {
+                alert('❌ Network error. Please email me directly at: mf304034123@gmail.com');
             }
-        } catch (error) {
-            console.log('Network error:', error);
-            alert('❌ Network error. Please email me directly at: mf304034123@gmail.com');
-        }
-    });
-}
-    // ========== Smooth Scroll ==========
+        });
+    }
+    
+    // Smooth Scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
@@ -345,37 +317,16 @@ if (contactForm) {
         });
     });
     
-    // ========== Dynamic Year ==========
+    // Dynamic Year
     const yearElement = document.querySelector('.footer-text p');
     if (yearElement) {
         yearElement.innerHTML = yearElement.innerHTML.replace('2025', new Date().getFullYear());
     }
     
-    // ========== Skill Bars Animation ==========
-    const skillBars = document.querySelectorAll('.skill-progress');
-    const skillsSection = document.querySelector('.skills');
-    
-    if (skillsSection && skillBars.length) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    skillBars.forEach(bar => {
-                        const width = bar.style.width;
-                        if (width) bar.style.width = width;
-                    });
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.3 });
-        
-        observer.observe(skillsSection);
-    }
-    
-    // ========== Console Welcome ==========
     console.log('%c🚀 Welcome to Mohd Faiz Portfolio!', 'color: #6366f1; font-size: 16px; font-weight: bold;');
 });
 
-// ========== Toggle Function (Global for Read More) ==========
+// Toggle Read More Function
 function toggleReadMore(btn) {
     const card = btn.closest('.cert-card');
     const shortDesc = card.querySelector('.cert-short-description');
