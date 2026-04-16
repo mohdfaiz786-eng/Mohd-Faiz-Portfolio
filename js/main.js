@@ -300,24 +300,37 @@ document.addEventListener('DOMContentLoaded', function() {
     fetchGitHubStats();
     
     // ========== Contact Form (SINGLE - Use this one) ==========
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
+// ========== Contact Form - Formspree Working ==========
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(contactForm);
+        
+        try {
+            const response = await fetch(contactForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
             
-            const name = document.getElementById('name')?.value || '';
-            const email = document.getElementById('email')?.value || '';
-            const subject = document.getElementById('subject')?.value || '';
-            const message = document.getElementById('message')?.value || '';
-            
-            // Show success message
-            alert(`Thank you ${name}! Your message has been sent. I'll get back to you soon.`);
-            
-            // Reset form
-            contactForm.reset();
-        });
-    }
-    
+            if (response.ok) {
+                alert('✅ Message sent successfully! I will get back to you soon.');
+                contactForm.reset();
+            } else {
+                const errorData = await response.json();
+                console.log('Formspree error:', errorData);
+                alert('❌ Error: ' + (errorData.error || 'Something went wrong. Please email me directly.'));
+            }
+        } catch (error) {
+            console.log('Network error:', error);
+            alert('❌ Network error. Please email me directly at: mf304034123@gmail.com');
+        }
+    });
+}
     // ========== Smooth Scroll ==========
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
