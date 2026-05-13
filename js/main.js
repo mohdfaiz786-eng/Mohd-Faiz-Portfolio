@@ -153,6 +153,15 @@ document.addEventListener('DOMContentLoaded', function() {
             category: "ai",
             github: "https://github.com/mohdfaiz786-eng",
             live: "https://codealpha-faq-chatbot.onrender.com/"
+        },
+        {
+            title: "Team Task Manager",
+            description: "A full-stack team collaboration and project management application that helps teams manage projects, assign tasks, track progress, and monitor productivity with secure authentication and role-based access control.",
+            image: "assets/images/team-task-pic.png",
+            tech: ["Node.js", "Express.js", "MongoDB", "JWT", "HTML", "CSS", "JavaScript"],
+            category: "web",
+            github: "https://github.com/mohdfaiz786-eng/Team-Task-Manager",
+            live: "https://team-task-manager-production-fe6b.up.railway.app/#"
         }
     ];
     
