@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Typed.js
     if (typeof Typed !== 'undefined') {
         new Typed('.typed-text', {
-            strings: ['Data Scientist', 'Python Developer', 'ML Engineer', 'Data Analyst'],
+            strings: ['Data Scientist', 'Python Developer', 'ML Engineer', 'Data Analyst','Generative AI'],
             typeSpeed: 50,
             backSpeed: 30,
             backDelay: 2000,
@@ -137,15 +137,6 @@ document.addEventListener('DOMContentLoaded', function() {
             live: "https://company-analysis.streamlit.app/"
         },
         {
-            title: "Data Analytics Dashboard",
-            description: "Interactive dashboard for visualizing CRM data with Plotly. Automated preprocessing and feature engineering.",
-            image: "assets/images/data-image.png",
-            tech: ["Python", "Pandas", "Plotly", "Streamlit"],
-            category: "web",
-            github: "https://github.com/mohdfaiz786-eng",
-            live: "#"
-        },
-        {
             title: "FAQ AI Chatbot",
             description: "NLP-based chatbot using TF-IDF and cosine similarity to answer frequently asked questions.",
             image: "assets/images/chatbot-image.png",
@@ -206,32 +197,65 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Certifications Data
-    const certifications = [
-        {
-            title: "Responsive Web Design",
-            issuer: "Free Code Camp",
-            date: "December 2024",
-            image: "assets/images/Responsive-Certificate.png",
-            icon: "fas fa-code",
-            description: "Completed Responsive Web Design certification from freeCodeCamp, gaining strong hands-on experience in HTML5, CSS3, Flexbox, and CSS Grid. Built multiple responsive web projects ensuring mobile compatibility, accessibility, and modern UI/UX design principles."
-        },
-        {
-            title: "Data Analytics Internship",
-            issuer: "Code Grills",
-            date: "October 2024",
-            image: "assets/images/certicate codegrills.jpeg",
-            icon: "fas fa-chart-line",
-            description: "Successfully completed a Data Analytics internship at Code Grills, working with real-world datasets using Python, Pandas, and NumPy. Performed data cleaning, preprocessing, exploratory data analysis (EDA), and created insightful visualizations using Matplotlib and Seaborn."
-        },
-        {
-            title: "Summer Training on Python with Data Science",
-            issuer: "Softpro India",
-            date: "August 2025",
-            image: "assets/images/Certificte sp.jpg",
-            icon: "fab fa-python",
-            description: "Completed intensive summer training on Python with Data Science at Softpro India, covering core Python programming, data analysis, and machine learning fundamentals. Worked on practical projects involving data preprocessing, model building, and evaluation using libraries like Pandas and Scikit-learn."
-        }
-    ];
+
+const certifications = [
+    {
+        title: "Statistics Using R & Python",
+        issuer: "Spoken Tutorial, IIT Bombay",
+        date: "October 2023",
+        image: "assets/images/R - Certificate.png",
+        icon: "fas fa-chart-bar",
+        description: "Achieved 77.5% in the R Programming Certification conducted by Spoken Tutorial, IIT Bombay. Gained practical knowledge in statistical analysis using R and Python, including data visualization, hypothesis testing, and regression modeling."
+    },
+    {
+        title: "Data Analytics Internship",
+        issuer: "Internship Certificate",
+        date: "July 2024",
+        image: "assets/images/certicate codegrills.jpeg",
+        icon: "fab fa-python",
+        description: "Completed Data Analytics Internship Certificate in Python and Pandas. Developed strong proficiency in data manipulation, cleaning, preprocessing, and exploratory data analysis using Pandas and NumPy libraries."
+    },
+    {
+        title: "Natural Language Processing",
+        issuer: "TCS iON",
+        date: "June 2026",
+        image: "assets/images/NLP Certificate .png",
+        icon: "fas fa-language",
+        description: "Completed the Natural Language Processing certification from TCS iON, gaining knowledge of text preprocessing, tokenization, stemming, lemmatization, TF-IDF, sentiment analysis, word embeddings, and transformer-based language models. Built practical understanding of NLP techniques used in AI-powered applications."
+    },
+    {
+        title: "Reinforcement Learning",
+        issuer: "TCS iON",
+        date: "June 2026",
+        image: "assets/images/RL Certificate TCS.png",
+        icon: "fas fa-robot",
+        description: "Completed the Reinforcement Learning certification from TCS iON, learning the fundamentals of intelligent agents, environments, rewards, Q-Learning, policy optimization, exploration vs. exploitation, and decision-making algorithms used in modern AI and robotics applications."
+    },
+    {
+        title: "Amdox Internship",
+        issuer: "Amdocs",
+        date: "2026",
+        image: "assets/images/certifiaction Training Amdox.jpg",
+        icon: "fas fa-laptop-code",
+        description: "Successfully completed the Amdocs Virtual Experience Program, gaining practical exposure to software development workflows, business problem-solving, system design concepts, requirement analysis, Agile methodologies, and real-world enterprise project scenarios while strengthening professional and technical skills."
+    },
+    {
+        title: "Responsive Web Design",
+        issuer: "Free Code Camp",
+        date: "December 2024",
+        image: "assets/images/Responsive-Certificate.png",
+        icon: "fas fa-code",
+        description: "Completed Responsive Web Design certification from freeCodeCamp, gaining hands-on experience in HTML5, CSS3, Flexbox, and CSS Grid. Built multiple responsive web projects ensuring mobile compatibility and accessibility."
+    },
+    {
+        title: "Python with Data Science",
+        issuer: "Softpro India Technologies",
+        date: "August 2025",
+        image: "assets/images/Certificte sp.jpg",
+        icon: "fas fa-code",
+        description: "Successfully completed Summer Training in Python with Data Science at Softpro India Technologies. Acquired practical experience in Python, SQL, Pandas, NumPy, data preprocessing, exploratory data analysis (EDA), feature engineering, machine learning, and data visualization. Worked on real-world datasets, built predictive analytics solutions, and strengthened end-to-end data science workflow skills through industry-oriented projects."
+    },
+];
     
     // Render Certifications
     const certGrid = document.getElementById('certificationsGrid');
@@ -286,31 +310,42 @@ document.addEventListener('DOMContentLoaded', function() {
     fetchGitHubStats();
     
     // Contact Form
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(contactForm);
-            
-            try {
-                const response = await fetch(contactForm.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                });
-                
-                if (response.ok) {
-                    alert('✅ Message sent successfully! I will get back to you soon.');
-                    contactForm.reset();
-                } else {
-                    alert('❌ Error sending message. Please email me directly.');
-                }
-            } catch (error) {
-                alert('❌ Network error. Please email me directly at: mf304034123@gmail.com');
+// ========== Contact Form ==========
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const submitBtn = this.querySelector('.btn-submit');
+        const btnText = submitBtn.querySelector('.btn-text');
+        const btnLoader = submitBtn.querySelector('.btn-loader');
+
+        // Show loading state
+        submitBtn.classList.add('loading');
+
+        const formData = new FormData(this);
+
+        try {
+            const response = await fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (response.ok) {
+                alert('✅ Message sent successfully! I will get back to you soon.');
+                this.reset();
+            } else {
+                alert('❌ Error sending message. Please email me directly: mf304034123@gmail.com');
             }
-        });
-    }
+        } catch (error) {
+            alert('❌ Network error. Please email me directly: mf304034123@gmail.com');
+        } finally {
+            // Hide loading state
+            submitBtn.classList.remove('loading');
+        }
+    });
+}
     
     // Smooth Scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -327,10 +362,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Dynamic Year
-    const yearElement = document.querySelector('.footer-text p');
-    if (yearElement) {
-        yearElement.innerHTML = yearElement.innerHTML.replace('2025', new Date().getFullYear());
-    }
+    // ========== Dynamic Year in Footer ==========
+const yearElement = document.getElementById('currentYear');
+if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
+}
     
     console.log('%c🚀 Welcome to Mohd Faiz Portfolio!', 'color: #6366f1; font-size: 16px; font-weight: bold;');
 });
